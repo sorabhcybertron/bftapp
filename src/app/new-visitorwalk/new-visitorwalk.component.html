@@ -1,0 +1,156 @@
+<main class="bgfix" [ngSwitch]="showStep" [style.background]="background" >
+    <div class="gradient"></div>
+    <div class="error-div">
+        <div class="error con headings">
+            <h4 *ngIf="!formInputGroup.valid && !submiterror" class="error-text">{{errorMessage}}</h4>
+        </div>
+    </div>
+    <div *ngIf="formloaded" [formGroup]="formInputGroup">
+        <div *ngFor="let screenItem of formInputGroup.get('screens').controls; let i = index;let stepfirst = first; let steplast = last">
+            <section class="step" *ngSwitchCase="i">
+                <div class="wrapper">
+                    <div class="head">
+                      <h4>{{form_name}}</h4>
+                    </div>
+                    <div class="main">
+                        <form [formGroup]="screenItem" enctype="multipart/form-data">
+                          <div *ngFor="let input of formsInputs[i]" class="form-row">
+                            <div [formGroup]="screenItem" [ngSwitch]="input.controlType">
+
+                                <!-- Type = TextBox (Text/Email/Tel/Color) -->
+                                <div *ngSwitchCase="'textbox'">
+                                    <div *ngIf="checkConditons(input)" class="form-group"  [ngClass]="{'has-danger': !screenItem.controls[input.key].valid && screenItem.controls[input.key].dirty }">
+                                        <input [type]="input.type" [formControlName]="input.key" class="form-control" [id]="input.key" [placeholder]="input.label">
+                                    </div>
+                                </div>
+
+                                <!-- Type = number (number) -->
+                                <div *ngSwitchCase="'numberInput'">
+                                    <div *ngIf="checkConditons(input)" class="form-group numberinput"  [ngClass]="{'has-danger': !screenItem.controls[input.key].valid && screenItem.controls[input.key].dirty }" >
+                                        <input [type]="input.type" [formControlName]="input.key" class="form-control" [id]="input.key" [placeholder]="input.label" [max]="input.max" [min]="input.min" [step]="input.step">
+                                    </div>
+                                </div>
+
+                                <!-- Type = TextArea (Textarea) -->
+                                <div *ngSwitchCase="'textarea'">
+                                    <div *ngIf="checkConditons(input)" class="form-group textarea" [ngClass]="{'has-danger': !screenItem.controls[input.key].valid && screenItem.controls[input.key].dirty }">
+                                        <textarea [formControlName]="input.key" class="form-control" [id]="input.key" [placeholder]="input.label"></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Type = Checkbox (Checkbox) -->
+                                <div *ngSwitchCase="'checkbox'">
+                                    <div *ngIf="checkConditons(input)" class="switch checkboxInput" [ngClass]="{'has-danger': !screenItem.controls[input.key].valid && screenItem.controls[input.key].dirty }">    
+                                        <div class="con">
+                                            <label>{{input.label}}</label>
+                                        </div>
+                                        <div class="options">
+                                            <div class="opt togglewrapper" [ngClass]="{'gray':input.key == 'sex[]'}"  *ngFor="let opt of input.options; let o = index;" >
+                                                <span class="option-label">{{opt['label']}}</span> <input type="checkbox" class="dn" [id]="input['key']+opt['value']" (change)="onCheckChange($event.target.checked,opt.value,i,input.key)" [checked]="opt['selected']">
+                                                <label [attr.for]="input['key']+opt['value']" class="toggle"><span class="toggle__handler"></span></label>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Type = Radio (Radio Inputs) -->
+                                <div *ngSwitchCase="'radioinput'">
+                                    <div *ngIf="checkConditons(input)" class="switch radioInput" [ngClass]="{'has-danger': !screenItem.controls[input.key].valid && screenItem.controls[input.key].dirty }">
+                                        <div class="con">
+                                            <label>{{input.label}}</label>
+                                        </div>
+                                        <div class="options">
+                                            <div class="opt togglewrapper" *ngFor="let opt of input.options">
+                                                <span class="option-label">{{opt['label']}}</span> <input type="radio" class="dn" [value]="opt['value']" [id]="input['key']+opt['value']" [formControl]="screenItem.controls[input.key]" name="{{input['key']}}">
+                                                <label [attr.for]="input['key']+opt['value']" class="toggle"><span class="toggle__handler"></span></label>
+                                            </div>  
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Type = Select Options (Select Options) -->
+                                <div *ngSwitchCase="'dropdown'">
+                                    <div *ngIf="checkConditons(input)" class="form-group select" [ngClass]="{'has-danger': !screenItem.controls[input.key].valid && screenItem.controls[input.key].dirty }">
+                                      <select [id]="input.key" [formControlName]="input.key" [multiple]="input.multiple">
+                                            <option *ngFor="let opt of input.options" [value]="opt.value" [selected]="opt.selected">{{opt.label}}</option>
+                                      </select>
+                                    </div>
+                                </div>
+
+                                <!-- Type = header (h6/h5/h4/h3/h2/h1) -->
+                                <div *ngSwitchCase="'header'">
+                                    <div *ngIf="checkConditons(input)" class="con headings">
+                                        <h6 *ngIf="input.type == 'h6'">{{input.label}}</h6>
+                                        <h5 *ngIf="input.type == 'h5'">{{input.label}}</h5>
+                                        <h4 *ngIf="input.type == 'h4'">{{input.label}}</h4>
+                                        <h3 *ngIf="input.type == 'h3'">{{input.label}}</h3>
+                                        <h2 *ngIf="input.type == 'h2'">{{input.label}}</h2>
+                                        <h1 *ngIf="input.type == 'h1'">{{input.label}}</h1>
+                                    </div>
+                                </div>
+
+                                <!-- Type = paragraph (p/canvas) -->
+                                <div *ngSwitchCase="'paragraph'" >
+                                    <div *ngIf="checkConditons(input)" class="con paragraphs text">
+                                    <p *ngIf="input.type =='p'" [innerHTML]="input.label | safeHTML"></p>
+
+                                    <div *ngIf="input.type == 'canvas'" class="canvas-area">
+                                            <signature-pad [options]="{'minWidth': 3,'canvasWidth': 520,'canvasHeight': 100,'backgroundColor':'rgb(255,255,255)'}"></signature-pad>
+                                            <a class="canvas-clear" (click)="clearSignature(input.canvascount,i,input.key);">Clear</a>
+                                            <a class="message-signatur">{{signaturemessage}}</a>
+                                            <a class="canvas-save" *ngIf="!savingSignature" (click)="signatureSave(input.canvascount,i,input.key)">Save</a>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                <!-- Type = File (file) -->
+                                <div *ngSwitchCase="'fileinput'">
+                                    <div *ngIf="checkConditons(input)" class="form-group fileinput" [ngClass]="{'has-danger': !screenItem.controls[input.key].valid && screenItem.controls[input.key].dirty }">
+                                        <label>{{input.label}}</label>
+                                        <input  type="file" name="{{input.key}}" [multiple]="input.multiple" (change)="onFileChange($event,i,input.key)" placeholder="{{input.label}}" />
+                                    </div>
+                                </div>
+
+                                <!-- Type = Date (date) -->
+                                <div *ngSwitchCase="'dateinput'">
+                                    <div *ngIf="checkConditons(input)" class="form-group dateinput" [ngClass]="{'has-danger': !screenItem.controls[input.key].valid && screenItem.controls[input.key].dirty }">
+                                        <label>{{input.label}}</label>
+                                        <div (click)="openDatepicker(i,input.key,'date')">
+                                            <input  type="text" name="{{input.key}}" placeholder="{{input.label}}" [formControlName]="input.key" disabled="true" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Type = buttonInput (date) -->
+                                <div *ngSwitchCase="'buttonInput'">
+                                    <div *ngIf="checkConditons(input)" class="next-step form-group buttoninput" [ngClass]="{'has-danger': !screenItem.controls[input.key].valid && screenItem.controls[input.key].dirty }">
+                                        <a *ngIf="!submiting && steplast && input.type=='submit'" (click)="Onsubmit()" >{{input.label}} <img src="assets/images/arrow-right.png" alt=""></a>
+                                        <a *ngIf="submiting" class="loading"><img src="assets/images/loading.gif"/></a>
+                                    </div>
+                                </div>
+
+                                 <!-- Type = header (h6/h5/h4/h3/h2/h1) -->
+                                <div *ngSwitchCase="'Image'">
+                                    <div *ngIf="checkConditons(input)" class="con headings con-image">
+                                        <img src="{{input.value}}" alt="{{input.label}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                        </form>
+                    </div>
+                </div>
+                <div *ngIf="stepfirst" class="next-step back">
+                    <a (click)="goBackToHome()"><img src="assets/images/arrow-right.png" alt=""> CANCEL</a>
+                </div>
+                <div *ngIf="!stepfirst" class="next-step back">
+                    <a (click)="showWhichStep(i-1, true)"><img src="assets/images/arrow-right.png" alt=""> BACK</a>
+                </div>
+                <div *ngIf="!steplast" class="next-step">
+                    <a (click)="showWhichStep(i+1)">NEXT <img src="assets/images/arrow-right.png" alt=""></a>
+                </div>
+            </section>
+        </div>
+    </div>                      
+</main>
+    

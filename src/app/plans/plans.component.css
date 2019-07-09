@@ -1,0 +1,17 @@
+main.bgfix{
+    background-repeat: no-repeat!important;
+    background-size: 100% 100% !important;
+}
+li.ptext.recommended{
+	background-color: rgba(0,255,0,0.4)!important;
+}
+.next-step {
+    bottom: 15px;
+}
+.next-step.back {
+    left: 30px;
+}
+.next-step.back a img {
+	margin-right: 12px;
+    transform: rotate(180deg);
+}

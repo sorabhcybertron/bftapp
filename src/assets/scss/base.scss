@@ -1,0 +1,16 @@
+@import 'reset';
+@import 'fonts';
+@import 'variables';
+@import 'header';
+@import 'navigation';
+@import 'page';
+@import 'footer';
+body {
+    background: $black;
+    text-shadow: 1px 1px #555555;
+}
+
+html,
+body {
+    height: 100%;
+}

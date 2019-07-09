@@ -1,0 +1,48 @@
+<div class="open-dash clearfix">
+    <div class="dash-left">
+        <div class="logo">
+            <a [routerLink]="['/get-satrted/']"><img src="assets/images/logo.png" alt="hamburger"></a>
+        </div>
+        <div class="tour-builder dash">
+            <h2>Getting Started with<br>Club Tour Builder</h2>
+            <ul>
+                <li><a class="active">Open a Tour</a></li>
+                <li><a>Create a New Tour</a></li>
+                <li><a>Get Help</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="dash-right">
+        <div class="dropdown dash">
+            <ul class="nav">
+                <li class="button-dropdown"  (click)="servercall.showMenu()">
+                    <a class="dropdown-toggle" [ngClass]="{'active': servercall.showUserMenu}">
+                        Mike McKenna <span>▼</span>
+                    </a>
+                    <ul class="dropdown-menu" [ngStyle]="{'display':servercall.showUserMenu === true ? 'block' : 'none'}">
+                        <li>
+                            <a >Logout</a>
+                        </li>
+                        <li>
+                            <a >Change location</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="open-tour">
+            <h3>OK, Let’s Get Started!</h3>
+            <h5>WHICH TOUR DO YOU WANT TO USE?</h5>
+            <div *ngFor="let formitem of formList">
+                <div class="box"   *ngIf="formitem['form_type'] == 0">
+                    <a [routerLink]="['/new-visitor/'+formitem.id]">
+                        <img src="{{formitem.background_image}}" alt="new-visitor">
+                        <div class="content">
+                            <h6>{{formitem.name}}</h6>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

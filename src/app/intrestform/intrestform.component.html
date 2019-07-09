@@ -1,0 +1,88 @@
+<main class="bgfix" [ngSwitch]="showStep" [style.background]="background" >
+    <div class="error-div">
+        <div class="error con headings">
+            <h4 *ngIf="errorMessage !== ''" class="error-text">{{errorMessage}}</h4>
+        </div>
+    </div>
+    <div *ngIf="formloaded">
+        <div *ngFor="let screen of formsInputs; let i = index;let stepfirst = first; let steplast = last">
+            <section class="step" *ngSwitchCase="i">
+                <div class="wrapper">
+                    <div class="head">
+                      <h4>{{form_name}}</h4>
+                    </div>
+                    <div class="main">
+                        <form>
+                          <div *ngFor="let input of screen" class="form-row">
+                            <div  [ngSwitch]="input.controlType">
+
+                                <!-- Type = header (h6/h5/h4/h3/h2/h1) -->
+                                <div *ngSwitchCase="'header'">
+                                    <div  class="con headings">
+                                        <h6 *ngIf="input.type == 'h6'">{{input.label}}</h6>
+                                        <h5 *ngIf="input.type == 'h5'">{{input.label}}</h5>
+                                        <h4 *ngIf="input.type == 'h4'">{{input.label}}</h4>
+                                        <h3 *ngIf="input.type == 'h3'">{{input.label}}</h3>
+                                        <h2 *ngIf="input.type == 'h2'">{{input.label}}</h2>
+                                        <h1 *ngIf="input.type == 'h1'">{{input.label}}</h1>
+                                    </div>
+                                </div>
+
+                                <!-- Type = paragraph (p/canvas) -->
+                                <div *ngSwitchCase="'paragraph'" >
+                                    <div class="con paragraphs text">
+                                    <p *ngIf="input.type =='p'" [innerHTML]="input.label | safeHTML"></p>
+                                    </div>
+                                </div>
+
+                                 <!-- Type = header (h6/h5/h4/h3/h2/h1) -->
+                                <div *ngSwitchCase="'Image'">
+                                    <div class="con headings">
+                                        <img src="{{input.value}}" alt="{{input.label}}"/>
+                                    </div>
+                                </div>
+
+                                <!-- Type = Checkbox (Checkbox) -->
+                                <div *ngSwitchCase="'checkbox'">
+                                    <div class="switch checkboxInput" *ngIf="input.key != 'inrested_in_plans[]'">    
+                                        <div class="con">
+                                            <label>{{input.label}}</label>
+                                        </div>
+                                        <div class="options">
+                                            <div class="opt togglewrapper"  *ngFor="let opt of input.options; let o = index;" >
+                                                <span class="option-label">{{opt['label']}}</span> <input type="checkbox" class="dn" [id]="input['key']+opt['value']">
+                                                <label [attr.for]="input['key']+opt['value']" class="toggle"><span class="toggle__handler"></span></label>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    <div *ngIf="input.key == 'inrested_in_plans[]' && checkConditons(input)" class="switch checkboxInput">    
+                                        <div class="con">
+                                            <label>{{input.label}}</label>
+                                        </div>
+                                        <div class="options">
+                                            <div class="opt togglewrapper" [ngClass]="{'gray':input.key == 'sex[]'}"  *ngFor="let opt of input.options; let o = index;" >
+                                                <span class="option-label">{{opt['label']}}</span> <input type="checkbox" class="dn" [id]="input['key']+opt['label']" (change)="IntonCheckChange($event.target.checked,opt,input.key)" [checked]="opt['selected']">
+                                                <label [attr.for]="input['key']+opt['label']" class="toggle"><span class="toggle__handler"></span></label>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- <div *ngIf="!stepfirst" class="next-step back">
+                    <a (click)="showWhichStep(i-1)"><img src="assets/images/arrow-right.png" alt=""> BACK</a>
+                </div> -->
+                <div *ngIf="!steplast" class="next-step">
+                    <a (click)="showWhichStep(i+1)">NEXT <img src="assets/images/arrow-right.png" alt=""></a>
+                </div>
+                <div *ngIf="steplast" class="next-step">
+                    <a (click)="showPlans()">NEXT <img src="assets/images/arrow-right.png" alt=""></a>
+                </div>
+            </section>
+        </div>
+    </div>                      
+</main>
+    

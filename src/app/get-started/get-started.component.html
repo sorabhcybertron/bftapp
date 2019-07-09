@@ -1,0 +1,33 @@
+<div class="started">
+    <div class="header clearfix">
+        <div class="hamburger">
+            <a><img src="assets/images/menu-icon.png" alt="hamburger"></a>
+        </div>
+        <div class="logo">
+            <a [routerLink]="['/get-satrted/']"><img src="assets/images/logo.png" alt="hamburger"></a>
+        </div>
+        <div class="dropdown">
+            <ul class="nav">
+                <li class="button-dropdown" (click)="servercall.showMenu()">
+                    <a class="dropdown-toggle" [ngClass]="{'active': servercall.showUserMenu}">Mike McKenna <span>▼</span></a>
+                    <ul class="dropdown-menu" [ngStyle]="{'display':servercall.showUserMenu === true ? 'block' : 'none'}">
+                        <li>
+                            <a>Logout</a>
+                        </li>
+                        <li>
+                            <a>Change location</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="tour-builder clearfix">
+        <h2>Getting Started with <br> Club Tour Builder</h2>
+        <ul>
+            <li><a [routerLink]="['/dashboard/']">Open a Tour</a></li>
+            <li><a [routerLink]="['/dashboard/']">Create a New Tour</a></li>
+            <li><a [routerLink]="['/dashboard/']">Get Help</a></li>
+        </ul>
+    </div>
+</div>

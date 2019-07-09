@@ -1,0 +1,177 @@
+.step .wrapper .main form .form-group input.form-control,.step .wrapper .main form .form-group select{
+    font-size: 30px;
+}
+.canvas-area a {
+    padding:  5px;
+    background:  #fff;
+    margin-top:  2px;
+    font-weight: 900;
+}
+
+.canvas-area a.canvas-clear {
+    float: left;
+}
+
+.canvas-area a.canvas-save {
+    float:  right;
+}
+
+.canvas-area {
+    position: relative;
+    text-align: center;
+}
+
+.canvas-area a.canvas-save,.canvas-area a.canvas-clear{
+    padding: 9px 25px!important;
+    text-shadow:none;
+    font-weight:bold;
+    border-radius:2px;
+}
+
+main.bgfix{
+    background-repeat: no-repeat!important;
+    background-size: 100% 100% !important;
+}
+
+input[type="color"] {
+    -webkit-appearance: none;
+    border: none;
+    height: 50px;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+    border: 0;
+}
+
+.form-group.buttoninput {
+    border-bottom: 0!important;
+    text-align: center;
+    margin-top: 50px!important;
+}
+
+.form-group.buttoninput button {
+    background-color: #fff; /* Green */
+    border: none;
+    color: #000;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 22px;
+    text-transform:  uppercase;
+    word-spacing: normal;
+    font-weight: 900;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.error-div {
+    display: inline-block;
+    position:  absolute;
+    top: 19px;
+}
+
+h4.error-text {
+    font-size: 25px!important;
+    color: red!important;
+    text-shadow:  none;
+}
+
+.con.headings h1, .con.headings h2, .con.headings h3, .con.headings h4, .con.headings h5, .con.headings h6 {
+    color: #fff;
+    font: 35px "AvenirNextLTProDemi",sans-serif;
+}
+
+.next-step.back{
+	left: 30px;
+}
+.next-step.back a img {
+    transform: rotate(180deg);
+}
+.form-group.textarea textarea{
+    height: 100px;
+    width: 100%;
+    background: transparent;
+    border: 0;
+    color: #fff!important;
+    font-size: 30px;
+}
+
+.form-group.has-danger {
+    border-bottom: 3px solid red!important;
+}
+.switch.has-danger .options .opt .option-label,.switch.has-danger h3{
+    color: red!important;
+}
+
+.step .wrapper .main form .form-group select option {
+    font-size: 25px;
+    margin-bottom: 3px;
+}
+
+.step .wrapper .main form .switch{
+	flex-direction: column;
+    align-items: normal;
+}
+
+.opt.togglewrapper{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-bottom: 15px;
+}
+
+
+span.option-label {
+    color: #fff;
+    font: 25px "AvenirNextLTProRegular",sans-serif;
+    width: 80%;
+}
+
+.con label,.form-group label {
+    color: #fff;
+    font: 30px "AvenirNextLTProRegular",sans-serif;
+}
+
+.switch.radioInput,.switch.checkboxInput {
+    border-bottom: 1px solid #fff;
+}
+
+.con.headings.con-image {
+    position: absolute;
+    left: 0;
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+
+
+.step .next-step a {
+    position: fixed;
+    bottom: 15px;
+    right: 20px;
+}
+
+.step .next-step.back a {
+    bottom: 15px;
+    left: 20px;
+    right: unset;
+}
+
+.gray span.option-label {
+    font-size: 30px;
+}
+
+a.message-signatur {
+    display: inline-block;
+    text-shadow:none;
+    font-size:25px;
+    background:none!important;
+    color:#fff;
+}

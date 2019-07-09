@@ -1,0 +1,18 @@
+#header {
+    .nav-main {
+        border: 0 none;
+        border-radius: 0;
+        margin: 0;
+        position: relative;
+        float: left;
+        width: 100%;
+        .logo {
+            float: left;
+            padding: 0;
+            position: relative;
+            img {
+                max-width: 100%;
+            }
+        }
+    }
+}

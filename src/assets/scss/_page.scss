@@ -1,0 +1,580 @@
+main {
+    min-height: 100%;
+    position: relative;
+    @media (min-width: $tablet) {
+        display: flex;
+        justify-content: center;
+    }
+    &.bgfix {
+        background: url(../images/steps-bg.png) 50% 50% no-repeat;
+        background-attachment: fixed;
+    }
+}
+
+.started {
+    background-color: $orange;
+    min-height: 100%;
+    padding: 15px;
+    @media (min-width: $tablet) {
+        padding: 2em;
+    }
+}
+
+.open-dash {
+    background: $white;
+    padding: 15px;
+    @media (min-width: $tablet) {
+        padding: 0;
+        background: $orange;
+    }
+}
+
+.tour-builder {
+    padding-top: 40px;
+    @media (min-width: $tablet) {
+        padding-top: 4em;
+    }
+    h2 {
+        color: $white;
+        float: left;
+        border-bottom: 5px solid $white;
+        padding-bottom: 10px;
+        font: 36px $copdem;
+        text-shadow: none;
+        @media (min-width: $tablet) {
+            font-size: 56px;
+        }
+        @media (max-width: $tablet - 1) {
+            br {
+                display: none;
+            }
+        }
+    }
+    ul {
+        width: 100%;
+        padding: 0px;
+        margin: 50px 0px 0px;
+        float: left;
+        li {
+            display: block;
+            margin-bottom: 30px;
+            background: url("../images/list-icon.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            padding-left: 45px;
+            a {
+                color: $white;
+                line-height: 30px;
+                text-decoration: none;
+                font: 24px $copyreg;
+                text-shadow: none;
+                &.active {
+                    font-family: $copymed;
+                }
+            }
+        }
+    }
+    &.dash {
+        h2 {
+            font: 32px/50px $copymed;
+            @media (min-width: 992px) {
+                font-size: 42px;
+                line-height: 60px;
+            }
+        }
+    }
+}
+
+.logo {
+    text-align: center;
+}
+
+.dash-left {
+    width: 50%;
+    float: left;
+    background-color: $orange;
+    padding: 2em;
+    position: fixed;
+    min-height: 100vh;
+    z-index: 2;
+    box-shadow: 0 0 13px 0 rgba(0, 0, 0, 0.5);
+    @media (max-width: $tablet - 1) {
+        display: none;
+    }
+}
+
+.dash-right {
+    background-color: $white;
+    min-height: 100vh;
+    position: relative;
+    @media (min-width: $tablet) {
+        padding: 2em;
+        width: 50%;
+        float: right;
+    }
+}
+
+.open-tour {
+    width: 100%;
+    float: left;
+    padding-top: 3em;
+    text-align: center;
+    h3 {
+        font: 24px $copdem;
+        color: #4a4a4a;
+        text-shadow: none;
+    }
+    h5 {
+        margin: 10px 0px 0px;
+        font: 16px $copymed;
+        text-shadow: none;
+        color: #4a4a4a;
+    }
+    .box {
+        margin-top: 30px;
+        position: relative;
+        .content {
+            position: absolute;
+            top: 45%;
+            width: 100%;
+            h6 {
+                color: $white;
+                font: 16px $copymed;
+            }
+        }
+    }
+}
+
+.step {
+    padding-bottom: 50px;
+    .wrapper {
+        padding: 50px 15px 70px;
+        @media (min-width: $tablet) {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            padding: 60px 15px 70px;
+        }
+        @media (min-width: $desktop) {
+            padding: 70px 15px;
+        }
+        .head {
+            margin-bottom: 15px;
+            h4 {
+                color: $white;
+                font: 28px $copdem;
+                @media (min-width: $tablet) {
+                    font-size: 40px;
+                }
+            }
+        }
+        &.plans {
+            width: 100%;
+            @media (min-width: $tablet) {
+                width: 980px;
+            }
+            .main {
+                width: 100%;
+            }
+            .card-info {
+                ul {
+                    &.plan-list {
+                        ul {
+                            &.meta {
+                                @media (min-width: $tablet) {
+                                    display: flex;
+                                }
+                                li {
+                                    float: left;
+                                    padding: 15px;
+                                    color: $white;
+                                    margin: 0 15px;
+                                    @media (min-width: $tablet) {
+                                        display: flex;
+                                        width: 25%;
+                                    }
+                                    @media (min-width: $desktop) {
+                                        margin: 0 25px;
+                                    }
+                                    h2 {
+                                        font: 18px $copymed;
+                                    }
+                                    @media (min-width: $tablet) {
+                                        &.name {
+                                            align-items: center;
+                                            width: 280px;
+                                        }
+                                    }
+                                    &.ptext {
+                                        background: rgba(0, 0, 0, 0.2);
+                                        @media (min-width: $tablet) {
+                                            flex-direction: column;
+                                            align-items: center;
+                                            justify-content: center;
+                                        }
+                                        .plan-name,
+                                        .enr {
+                                            font: 18px $copyreg;
+                                        }
+                                        .cost {
+                                            font: 56px $copyreg;
+                                            sup {
+                                                font: 20px/1 $copyreg;
+                                                display: inline-block;
+                                                position: relative;
+                                                top: -2px;
+                                            }
+                                        }
+                                        .tick {
+                                            background: $white;
+                                            width: 24px;
+                                            line-height: 24px;
+                                            text-align: center;
+                                            height: 24px;
+                                            font-size: 20px;
+                                            text-shadow: none;
+                                            color: #333;
+                                            padding-top: 3px;
+                                            padding-left: 4px;
+                                            transform: rotate(45deg);
+                                            border-radius: 50%;
+                                        }
+                                    }
+                                    &:first-child {
+                                        margin-left: 0;
+                                    }
+                                    &:last-child {
+                                        margin-right: 0;
+                                    }
+                                    .info-card {
+                                        text-shadow: none;
+                                        a {
+                                            color: #3e3c3c;
+                                            font-size: 22px;
+                                            margin-right: 10px;
+                                            &:hover {
+                                                color: $white;
+                                            }
+                                            &.active {
+                                                color: $white;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .main {
+            @media (min-width: 640px) {
+                width: 520px;
+            }
+            form {
+                .form-group {
+                    margin-top: 30px;
+                    border-bottom: 1px solid $white;
+                    input {
+                        background: none;
+                        border: 0 none;
+                        width: 100%;
+                        padding: 6px;
+                        color: $white;
+                        font: 20px $copyreg;
+                        @media (min-width: $tablet) {
+                            font-size: 26px;
+                        }
+                        &::-webkit-input-placeholder {
+                            color: $white;
+                        }
+                        &::-moz-placeholder {
+                            color: $white;
+                        }
+                        &:-ms-input-placeholder {
+                            color: $white;
+                        }
+                        &:-moz-placeholder {
+                            color: $white;
+                        }
+                        @media (min-width: $tablet) {
+                            &.form-control {
+                                font-size: 40px;
+                            }
+                        }
+                    }
+                    select {
+                        border: 0 none;
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+                        appearance: none;
+                        background: url(../images/expand-arrow.png) calc(100% - 10px) 50% no-repeat;
+                        padding: 6px 30px 6px 6px;
+                        color: $white;
+                        width: 100%;
+                        font: 20px $copyreg;
+                        @media (min-width: $tablet) {
+                            font-size: 26px;
+                        }
+                        option {
+                            background: rgba(0, 0, 0, 0.3);
+                            color: $white;
+                            font-size: 20px;
+                            text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+                        }
+                    }
+                    &::first-child {
+                        margin-top: 0;
+                    }
+                }
+                .switch {
+                    margin-top: 30px;
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                    .con {
+                        h3 {
+                            color: $white;
+                            font: 18px $copyreg;
+                            margin-right: 24px;
+                            @media (min-width: $tablet) {
+                                font-size: 40px;
+                            }
+                        }
+                        h4 {
+                            color: $white;
+                            margin-right: 24px;
+                            font: 18px $copyreg;
+                            @media (min-width: $tablet) {
+                                font-size: 26px;
+                            }
+                        }
+                        h5 {
+                            color: $white;
+                            margin-left: 24px;
+                            font: 18px $copyreg;
+                            @media (min-width: $tablet) {
+                                font-size: 26px;
+                            }
+                        }
+                        h6 {
+                            color: $white;
+                            margin-left: 24px;
+                            font: 12px $copyreg;
+                            @media (min-width: $tablet) {
+                                font-size: 16px;
+                            }
+                        }
+                    }
+                    .togglewrapper {
+                        input {
+                            position: absolute;
+                            left: -99em;
+                            &:checked {
+                                +.toggle {
+                                    background: #417505;
+                                    &:before {
+                                        color: #4a4a4a;
+                                    }
+                                    &:after {
+                                        color: #417505;
+                                    }
+                                    .toggle__handler {
+                                        transform: translateX(-37px);
+                                        @media (min-width: $tablet) {
+                                            transform: translateX(-47px);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .toggle {
+                            cursor: pointer;
+                            display: inline-block;
+                            position: relative;
+                            width: 80px;
+                            height: 32px;
+                            border: 3px solid $white;
+                            background: #d0021b;
+                            text-shadow: none;
+                            border-radius: 5px;
+                            transition: all 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+                            @media (min-width: $tablet) {
+                                width: 100px;
+                                height: 40px;
+                            }
+                            &:before,
+                            &:after {
+                                position: absolute;
+                                z-index: 2;
+                                transition: all 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+                                font: 16px/1 $copymed;
+                                text-align: center;
+                                width: 50%;
+                                height: 100%;
+                                top: 0;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                @media (min-width: $tablet) {
+                                    font-size: 20px;
+                                }
+                            }
+                            &:before {
+                                content: "Y";
+                                left: 0;
+                                color: #d0021b;
+                            }
+                            &:after {
+                                content: "N";
+                                right: 0;
+                                color: #4a4a4a;
+                            }
+                            &__handler {
+                                display: inline-block;
+                                position: relative;
+                                z-index: 1;
+                                background: $white;
+                                width: 50%;
+                                height: 100%;
+                                top: 0;
+                                left: 37px;
+                                transition: all 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+                                transform: translateX(0px);
+                                @media (min-width: $tablet) {
+                                    left: 47px;
+                                }
+                            }
+                        }
+                        &.light {
+                            .toggle {
+                                background: #c7c7c7;
+                                &::before {
+                                    color: #c7c7c7;
+                                }
+                            }
+                        }
+                        &.gray {
+                            .toggle {
+                                background: #888;
+                                &::before {
+                                    content: 'M';
+                                    color: #888;
+                                }
+                                &::after {
+                                    content: 'F';
+                                    color: #4a4a4a;
+                                }
+                                &__handler {
+                                    // left: 0;
+                                    background: $white;
+                                }
+                            }
+                            input {
+                                &:checked {
+                                    +.toggle {
+                                        background: #888;
+                                        &:before {
+                                            color: #4a4a4a;
+                                        }
+                                        &::after {
+                                            color: #888;
+                                        }
+                                        &__handler {
+                                            transform: translateX(37px);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .sign-area {
+                    margin: 20px 0px 0px;
+                    input[type="text"] {
+                        border: 0 none;
+                        width: 100%;
+                        padding: 10px;
+                        height: 100px;
+                        text-align: center;
+                        font: 30px $copylgt
+                    }
+                }
+            }
+            .text {
+                float: left;
+                width: 100%;
+                margin: 35px 0 20px 0;
+                border-bottom: 1px solid $white;
+                padding: 0px 0 25px 0;
+                p {
+                    margin: 0;
+                    color: $white;
+                    font: 15px $copyreg;
+                }
+            }
+            .about {
+                text-align: center;
+                margin-top: 50px;
+                p {
+                    color: $white;
+                    margin: 15px 0 30px 0;
+                    font: 20px $copyreg;
+                    @media (min-width: $tablet) {
+                        font-size: 26px;
+                    }
+                }
+            }
+            &.wide-sel {
+                @media (min-width: 640px) {
+                    width: 600px;
+                }
+                .switch {
+                    margin-top: 15px;
+                }
+            }
+        }
+    }
+    .map-area {
+        padding: 20px 30px;
+        @media (min-width: 768px) {
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+        }
+    }
+    .video {
+        width: 100%;
+        @media (min-width: 713px) {
+            width: 713px;
+        }
+        iframe {
+            width: 100%;
+        }
+    }
+    .next-step {
+        position: absolute;
+        right: 30px;
+        bottom: 50px;
+        a {
+            color: $white;
+            display: flex;
+            align-items: center;
+            font: 16px $copdem;
+            margin-bottom: 10px;
+            @media (min-width: $tablet) {
+                font-size: 20px;
+                margin-bottom: 0;
+            }
+            img {
+                margin-left: 10px;
+                width: 30px;
+                @media (min-width: $tablet) {
+                    margin-left: 12px;
+                    width: auto;
+                }
+            }
+        }
+    }
+}

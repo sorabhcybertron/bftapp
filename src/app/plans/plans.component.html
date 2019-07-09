@@ -1,0 +1,94 @@
+<main class="bgfix" [style.background]="background">
+	<section class="step">
+	   <div class="wrapper plans">
+	        <div class="head">
+	            <h4>Let’s Get Started!</h4>
+	        </div>
+	        <div class="main">
+	            <div class="card-info">
+	                <ul class="plan-list clearfix">
+	                    <li class="row-out">
+	                        <ul class="meta clearfix">
+	                            <li class="name">
+	                                <h2>Via ACH</h2>
+	                            </li>
+	                            <li class="ptext" [ngClass]="{'recommended':newPlans.basic.recommended}">
+	                                <h6 class="plan-name">Basic Plan</h6>
+	                                <span *ngIf="planType=='ach'" class="cost">{{newPlans.basic.ach.dollar}}<sup>{{newPlans.basic.ach.cents}}<br>/mo</sup></span>
+
+	                                <span *ngIf="planType=='credit'" class="cost">{{newPlans.basic.credit.dollar}}<sup>{{newPlans.basic.ach.cents}}<br>/mo</sup></span>
+	                            </li>
+	                            <li class="ptext" [ngClass]="{'recommended':newPlans.better.recommended}">
+	                                <h6 class="plan-name">Better Plan</h6>
+	                                <span *ngIf="planType=='ach'" class="cost">{{ newPlans.better.ach.dollar}}<sup>{{ newPlans.better.ach.cents}}<br>/mo</sup></span>
+
+	                                <span *ngIf="planType=='credit'" class="cost">{{ newPlans.better.credit.dollar}}<sup>{{ newPlans.better.ach.cents}}<br>/mo</sup></span>
+	                            </li>
+	                            <li class="ptext" [ngClass]="{'recommended':newPlans.best.recommended}">
+	                                <h6 class="plan-name">Best Plan</h6>
+	                                <span *ngIf="planType=='ach'" class="cost">{{newPlans.best.ach.dollar}}<sup>{{newPlans.best.ach.cents}}<br>/mo</sup></span>
+
+	                                <span *ngIf="planType=='credit'" class="cost">{{newPlans.best.credit.dollar}}<sup>{{newPlans.best.ach.cents}}<br>/mo</sup></span>
+	                            </li>
+	                        </ul>
+	                    </li>
+	                    <li class="row-out">
+	                        <ul class="meta clearfix">
+	                            <li class="name">
+	                                <h2>Enrollment Fee</h2>
+	                            </li>
+	                            <li class="ptext" [ngClass]="{'recommended':newPlans.basic.recommended}">
+	                                <span *ngIf="planType=='ach'" class="enr">${{newPlans.basic.ach.enrollment | number: '1.0-0'}}</span>
+
+	                                <span *ngIf="planType=='credit'" class="enr">${{newPlans.basic.credit.enrollment | number: '1.0-0'}}</span>
+	                            </li>
+	                            <li class="ptext" [ngClass]="{'recommended':newPlans.better.recommended}">
+	                                <span *ngIf="planType=='ach'" class="enr">${{newPlans.better.ach.enrollment | number: '1.0-0'}}</span>
+
+	                                <span *ngIf="planType=='credit'" class="enr">${{newPlans.better.credit.enrollment | number: '1.0-0'}}</span>
+	                            </li>
+	                            <li class="ptext" [ngClass]="{'recommended':newPlans.best.recommended}">
+	                                <span *ngIf="planType=='ach'" class="enr">${{newPlans.best.ach.enrollment | number: '1.0-0'}}</span>
+
+	                                <span *ngIf="planType=='credit'" class="enr">${{newPlans.best.credit.enrollment | number: '1.0-0'}}</span>
+	                            </li>
+	                        </ul>
+	                    </li>
+	                    <li *ngFor="let service of serviceArray">
+	                    	<ul class="meta clearfix">
+	                            <li class="name">
+	                                <h2>{{service.value}}</h2>
+	                            </li>
+	                            <li [ngClass]="{'ptext':doNewHaveService('good-services',service.value),'recommended':newPlans.basic.recommended}"> 
+	                            	<span *ngIf="doNewHaveService('good-services',service.value)" class="tick">&#x2518;</span> 
+	                            </li>
+	                            <li [ngClass]="{'ptext':doNewHaveService('better-services',service.value),'recommended':newPlans.better.recommended}"> 
+	                            	<span *ngIf="doNewHaveService('better-services',service.value)" class="tick">&#x2518;</span> 
+	                            </li>
+	                            <li [ngClass]="{'ptext':doNewHaveService('best-services',service.value),'recommended':newPlans.best.recommended}"> 
+	                            	<span *ngIf="doNewHaveService('best-services',service.value)" class="tick">&#x2518;</span> 
+	                            </li>
+	                        </ul>
+	                    </li>
+	                    <li class="row-out">
+	                        <ul class="meta clearfix">
+	                            <li class="name">
+	                                <div class="info-card">
+	                                    <a (click)="changePlantype('ach')" [ngClass]="{'active':planType=='ach'}"><i class="fas fa-university"></i></a>
+	                                    <a (click)="changePlantype('credit')" [ngClass]="{'active':planType=='credit'}"><i class="fa fa-id-card" aria-hidden="true"></i></a>
+	                                </div>
+	                            </li>
+	                        </ul>
+	                    </li>
+	                </ul>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="next-step back" >
+	        <a (click)="goBackInterest()"><img src="assets/images/arrow-right.png" alt=""> BACK</a>
+	    </div>
+	    <div class="next-step" >
+	        <a (click)="goBackHome()">FINISH <img src="assets/images/arrow-right.png" alt=""> </a>
+	    </div>
+	</section>
+</main>
