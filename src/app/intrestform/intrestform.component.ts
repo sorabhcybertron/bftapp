@@ -57,7 +57,7 @@ export class IntrestformComponent implements OnInit {
     let pdata = {};
     /*New Intrest Form*/
     
-    this.servercall.postCall(this.servercall.baseUrl+"get/"+formid+".json",pdata).subscribe(
+    this.servercall.postCall(this.servercall.baseUrl+"get/form"+formid+".json",pdata).subscribe(
      resp =>{ 
        if(resp['form']){
          // this.background = this.servercall.cleanURL(`url(${resp['form']['background_image']})`,'style');
