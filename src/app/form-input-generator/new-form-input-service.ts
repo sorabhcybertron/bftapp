@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ServerCallsService } from '../server-calls.service';
 import { FormInputGeneratorBase } from './form-input-generator-base';
 import { FormInputTextboxGenerator, FormInputMFboxGenerator,
-         FormCanvasGenerator, FormInputYNboxGenerator, FormParagraphGenerator 
+         FormCanvasGenerator, FormInputYNboxGenerator, FormParagraphGenerator, FormInputDateGenerator
        } from './newInputGenerator';
 
 
@@ -40,6 +40,36 @@ export class NewFormInputService {
                 type: inp.subtype,
                 order: 1
             }));
+        } else if (inp['t'] === 'Email') {
+          inputs.push(new FormInputTextboxGenerator({
+                key: inp.q,
+                label: inp.q,
+                required: true,
+                value: inp.value,
+                type: 'email',
+                order: 1
+            }));
+
+        } else if (inp['t'] === 'Date') {
+          inputs.push(new FormInputDateGenerator({
+                key: inp.q,
+                label: inp.q,
+                required: true,
+                value: inp.value,
+                type: 'date',
+                order: 1
+            }));
+
+        } else if (inp['t'] === 'Tel') {
+          inputs.push(new FormInputTextboxGenerator({
+                key: inp.q,
+                label: inp.q,
+                required: true,
+                value: inp.value,
+                type: 'tel',
+                order: 1
+            }));
+
         } else if (inp['t'] === 'M/F Toggle') {
           inputs.push(new FormInputMFboxGenerator({
               key: inp.q,

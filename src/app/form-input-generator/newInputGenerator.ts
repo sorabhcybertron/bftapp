@@ -10,6 +10,36 @@ export class FormInputTextboxGenerator extends FormInputGeneratorBase<string> {
   }
 }
 
+export class FormInputEmailGenerator extends FormInputGeneratorBase<string> {
+  controlType = 'email';
+  type: string;
+
+  constructor(options: {} = {}) {
+    super(options);
+    this.type = options['type'] || '';
+  }
+}
+
+export class FormInputDateGenerator extends FormInputGeneratorBase<string> {
+  controlType = 'dateinput';
+  type: string;
+
+  constructor(options: {} = {}) {
+    super(options);
+    this.type = options['type'] || '';
+  }
+}
+
+export class FormInputTelGenerator extends FormInputGeneratorBase<string> {
+  controlType = 'tel';
+  type: string;
+
+  constructor(options: {} = {}) {
+    super(options);
+    this.type = options['type'] || '';
+  }
+}
+
 export class FormInputMFboxGenerator extends FormInputGeneratorBase<string> {
   controlType = 'M/F Toggle';
   type: string;

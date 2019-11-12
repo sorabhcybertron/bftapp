@@ -47,6 +47,17 @@
                                       </div>
                                   </div>
                               </div>
+
+                              
+                              <div *ngSwitchCase="'dateinput'">
+                                <div *ngIf="checkConditons(input)" class="form-group dateinput" [ngClass]="{'has-danger': !screenItem.controls[input.key].valid && screenItem.controls[input.key].dirty }">
+                                    <label>{{input.label}}</label>
+                                    <div (click)="openDatepicker(i,input.key,'date')">
+                                        <input  type="text" name="{{input.key}}" placeholder="{{input.label}}" [formControlName]="input.key" disabled="true" />
+                                    </div>
+                                </div>
+                              </div>
+
                               <div *ngSwitchCase="'paragraph'" >
                                 <div *ngIf="checkConditons(input)" class="con paragraphs text">
                                     <p *ngIf="input.type =='paragraph'" [innerHTML]="input.label | safeHTML"></p>

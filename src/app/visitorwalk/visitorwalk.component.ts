@@ -306,6 +306,18 @@ addValidators(input, control) {
           group[input.key] = input.required
             ? new FormControl(input.value || '', Validators.compose([Validators.required]))
             : new FormControl(input.value || '');
+        } else if (input['type'] === 'tel') {
+          group[input.key] = input.required
+                             ? new FormControl(input.value || '', Validators.compose([Validators.required, this.validatorNumber()]))
+                             : new FormControl(input.value || '', Validators.compose([this.validatorNumber()]));
+        } else if (input['type'] === 'email') {
+          group[input.key] = input.required
+                             ? new FormControl(input.value || '', Validators.compose([Validators.required, this.validatorEmail()]))
+                             : new FormControl(input.value || '', Validators.compose([this.validatorEmail()]));
+        } else if (input['type'] === 'password' ) {
+          group[input.key] = input.required
+                             ? new FormControl(input.value || '', Validators.compose([Validators.required, this.validatorPassword()]))
+                             : new FormControl(input.value || '', Validators.compose([this.validatorPassword()]));
         } else {
           if (input.controlType === 'textbox') {
               group[input.key] = input.required
@@ -327,7 +339,7 @@ addValidators(input, control) {
   }
 
   onCheckChange(isChecked: boolean, val, group, tg) {
-    const checkgroupFormArray = <FormArray>this.formInputGroup.get(['screens',group,tg]);
+    const checkgroupFormArray = <FormArray>this.formInputGroup.get(['screens', group, tg]);
     if (isChecked) {
       if (tg === 'sex[]') {
         checkgroupFormArray.removeAt(0);
