@@ -25,6 +25,7 @@ import { PlansComponent } from './plans/plans.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { AftersubmitComponent } from './aftersubmit/aftersubmit.component';
 import { IntrestformComponent } from './intrestform/intrestform.component';
+import { VisitorwalkComponent } from './visitorwalk/visitorwalk.component';
 
 
 
@@ -32,8 +33,8 @@ import { IntrestformComponent } from './intrestform/intrestform.component';
 const routes: Routes = [
   { path: '', component: GetStartedComponent,canActivate: [ServerCallsService]   },
   { path: 'dashboard', component: DashboardComponent,	canActivate: [ServerCallsService]   },
-  { path: 'new-visitor', component: NewVisitorwalkComponent,  canActivate: [ServerCallsService]   },
-  { path: 'new-visitor/:formid', component: NewVisitorwalkComponent,  canActivate: [ServerCallsService]   },
+  { path: 'new-visitor', component: VisitorwalkComponent,  canActivate: [ServerCallsService]   },
+  { path: 'new-visitor/:formid', component: VisitorwalkComponent,  canActivate: [ServerCallsService]   },
   { path: 'thankyou/:formid', component: AftersubmitComponent,  canActivate: [ServerCallsService]   },
   { path: 'intrests/:formid', component: IntrestformComponent,  canActivate: [ServerCallsService]   },
   { path: 'plans', component: PlansComponent,  canActivate: [ServerCallsService]   },
@@ -55,6 +56,7 @@ const routes: Routes = [
     SafeHtml,
     AftersubmitComponent,
     IntrestformComponent,
+    VisitorwalkComponent,
   ],
   imports: [
     BrowserModule,

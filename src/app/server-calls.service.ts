@@ -19,10 +19,10 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ServerCallsService {
-  showUserMenu:boolean=false;
-  public loginState :boolean = true;
-  // public baseUrl : string = 'http://www.bfitapp.cybertronindia.com/api/';
-  public baseUrl : string = 'http://bfitapp.sgfclients.com/api/';
+  showUserMenu: boolean=false;
+  public loginState: boolean = true;
+  public baseUrl: string = 'http://www.bfitapp.cybertronindia.com/api/';
+  // public baseUrl : string = 'http://bfitapp.sgfclients.com/api/';
   public loginChange: Subject<boolean> = new Subject<boolean>();
 
   

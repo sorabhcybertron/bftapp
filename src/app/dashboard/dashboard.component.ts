@@ -20,17 +20,17 @@ export class DashboardComponent implements OnInit {
   	this.loadForms();
   }
 
-  loadForms(){
-	  	let pdata = {};
-	    this.servercall.postCall(this.servercall.baseUrl+"forms/listing.json",pdata).subscribe(
-	         resp =>{ 
-	            this.formList = resp["forms"];
+  loadForms() {
+	const pdata = {};
+	this.servercall.postCall(this.servercall.baseUrl+"presentations.json",pdata).subscribe(
+	         resp =>{
+	            this.formList = resp["presentations"];
 	            console.log(this.formList);
 	         },
 	         error => {
 	            console.log(error);
 	         } 
-	    );
+	);
   	}
 
 }

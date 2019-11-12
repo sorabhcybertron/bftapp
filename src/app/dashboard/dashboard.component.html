@@ -34,7 +34,7 @@
             <h3>OK, Let’s Get Started!</h3>
             <h5>WHICH TOUR DO YOU WANT TO USE?</h5>
             <div *ngFor="let formitem of formList">
-                <div class="box"   *ngIf="formitem['form_type'] == 0">
+                <div class="box"   *ngIf="formitem['type'] == 'General'">
                     <a [routerLink]="['/new-visitor/'+formitem.id]">
                         <img src="{{formitem.background_image}}" alt="new-visitor">
                         <div class="content">
