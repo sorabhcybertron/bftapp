@@ -79,27 +79,22 @@ export class ServerCallsService {
     return body || {};
   }
 
-  public postCall(url, data){
+  public postCall(url, data) {
       console.log(httpOptions);
-     return this.http.post(url,data,httpOptions).pipe(
+     return this.http.post(url, data, httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );
   }
 
-  // public postCall(url, data){
-  //    return this.http.post(url,data,this.httpOptions).pipe(
-  //     map(this.extractData),
-  //     catchError(this.handleError)
-  //   );
-  // }
-  
-  // public formpostCall(url, data){
-  //    return this.http.post(url,data).pipe(
-  //     map(this.extractData),
-  //     catchError(this.handleError)
-  //     );
-  // }
+  public submitCall(url, data) {
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    return this.http.post(url, JSON.stringify(data), { headers }).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
 
   private handleError (error: Response | any) {
     let errMsg: string;

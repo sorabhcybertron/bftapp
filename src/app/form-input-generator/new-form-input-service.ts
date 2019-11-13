@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ServerCallsService } from '../server-calls.service';
 import { FormInputGeneratorBase } from './form-input-generator-base';
 import { FormInputTextboxGenerator, FormInputMFboxGenerator,
-         FormCanvasGenerator, FormInputYNboxGenerator, FormParagraphGenerator, FormInputDateGenerator
+         FormCanvasGenerator, FormInputYNboxGenerator, FormParagraphGenerator, FormInputDateGenerator, FormImageGenerator, FormVideoGenerator
        } from './newInputGenerator';
 
 
@@ -112,6 +112,24 @@ export class NewFormInputService {
               canvasCount: canvCout,
               conditions: conditonalarray,
               order: 1
+          }));
+        } else if (inp['t'] === 'image') {
+          inputs.push(new FormImageGenerator({
+            key: 'imgs',
+            label: inp.q,
+            required: true,
+            value: inp.value,
+            type: 'image',
+            order: 1
+          }));
+        } else if (inp['t'] === 'video') {
+          inputs.push(new FormVideoGenerator({
+            key: 'video',
+            label: inp.q,
+            required: true,
+            value: inp.value,
+            type: 'video',
+            order: 1
           }));
         }
       }

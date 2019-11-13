@@ -75,3 +75,21 @@ export class FormCanvasGenerator extends FormInputGeneratorBase<string> {
     this.type = options['type'] || '';
   }
 }
+
+export class FormImageGenerator extends FormInputGeneratorBase<string> {
+  controlType = 'image';
+  type: string;
+  constructor(options: {} = {}) {
+    super(options);
+    this.type = options['type'] || '';
+  }
+}
+
+export class FormVideoGenerator extends FormInputGeneratorBase<string> {
+  controlType = 'video';
+  type: string;
+  constructor(options: {} = {}) {
+    super(options);
+    this.type = options['type'] || '';
+  }
+}

@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ChangeDetectorRef, ViewChildren, QueryLis
 import { Router, ActivatedRoute} from '@angular/router';
 import { ServerCallsService } from '../server-calls.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators, ValidatorFn, FormControl, FormArray} from '@angular/forms';
-import { map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 
@@ -204,7 +203,8 @@ addValidators(input, control) {
              if (resp['presentations']['screens']) {
               for (let key in resp['presentations']['screens']) {
                 const obj = resp['presentations']['screens'][key];
-                const questions = JSON.parse(resp['presentations']['screens'][key].questions);
+                let questions = JSON.parse(resp['presentations']['screens'][key].questions);
+                questions = (questions) ? questions : [];
                 if ( resp['presentations']['screens'][key].disclaimer &&  resp['presentations']['screens'][key].consent) {
                   questions.push({
                     q: resp['presentations']['screens'][key].disclaimer, 
@@ -223,6 +223,18 @@ addValidators(input, control) {
                     onClickFieldValue: true,
                   });
                 }
+                if ( resp['presentations']['screens'][key].graphic && resp['presentations']['screens'][key].graphic != '') {
+                  questions.push({
+                    q: resp['presentations']['screens'][key].graphic,
+                    ​​t: 'image',
+                  });
+                }
+                if ( resp['presentations']['screens'][key].video ) {
+                  questions.push({
+                    q: resp['presentations']['screens'][key].video,
+                    ​​t: 'video'
+                  });
+                }
                 obj.questions = questions;
                 this.formloadedForm.push(obj);
                 if(questions) {
@@ -230,6 +242,7 @@ addValidators(input, control) {
                   this.formsInputs.push(this.forminputsrvc.getFormdata(questions, 'notreal'));
                 }
               }
+              console.log(this.formdetail, this.formloadedForm);
               this.formloaded = true;
              }
            }
@@ -254,31 +267,11 @@ addValidators(input, control) {
     if (this.formInputGroup.status === 'VALID') {
       this.submiting = true;
       const pData = this.prepareSave();
-      this.servercall.postCall(this.servercall.baseUrl + 'form' + this.formid + '.json', pData).subscribe(
+      this.servercall.submitCall(this.servercall.baseUrl + 'visitorResponses.json', pData).subscribe(
             resp => {
-               if (resp['json']['status']) {
+               if (resp) {
                  this.toastr.success('Thank You', 'Your Data has been saved', {timeOut: 2000});
-                 if (this.thankyouform) {
-                   const od = {
-                               background: this.background,
-                               background_url: this.formdetail.presentations.background_image,
-                               form_name : this.form_name,
-                               data : this.formInputGroup.value['screens'],
-                               presentations : {
-                                         general : this.formdetail.presentations.id,
-                                         thankyou: this.formdetail.presentations.thankyou_presentation_id,
-                                         intrest: this.formdetail.presentations.recap_presentation_id
-                                       }
-                            };
-                   this.servercall.setLocalStorage('submittedVal', JSON.stringify(od));
-                   this.router.navigate(['/thankyou/' + this.thankyouform]);
-                 } else {
-                   this.router.navigate(['/dashboard/']);
-                 }
-               } else {
-                 this.submiting = false;
-                 this.submiterror = true;
-                 this.toastr.error('Something went wrong!', 'Couldn`t save your data.', {timeOut: 2000});
+                 this.router.navigate(['/dashboard/']);
                }
            },
            error => {
@@ -318,6 +311,10 @@ addValidators(input, control) {
           group[input.key] = input.required
                              ? new FormControl(input.value || '', Validators.compose([Validators.required, this.validatorPassword()]))
                              : new FormControl(input.value || '', Validators.compose([this.validatorPassword()]));
+        } else if (input['type'] === 'date') {
+          group[input.key] = input.required
+                              ? new FormControl(input.value || '', Validators.compose([Validators.required]))
+                              : new FormControl(input.value || '');
         } else {
           if (input.controlType === 'textbox') {
               group[input.key] = input.required
@@ -338,37 +335,34 @@ addValidators(input, control) {
     }
   }
 
-  onCheckChange(isChecked: boolean, val, group, tg) {
-    const checkgroupFormArray = <FormArray>this.formInputGroup.get(['screens', group, tg]);
-    if (isChecked) {
-      if (tg === 'sex[]') {
-        checkgroupFormArray.removeAt(0);
-        checkgroupFormArray.push(new FormControl('Male'));
-      } else {
-        checkgroupFormArray.push(new FormControl(val));
-      }
-    } else {
-      if (tg === 'sex[]') {
-        checkgroupFormArray.removeAt(0);
-        checkgroupFormArray.push(new FormControl('Female'));
-      } else {
-        const index = checkgroupFormArray.controls.findIndex(x => x.value === val);
-        checkgroupFormArray.removeAt(index);
-      }
-    }
-        // console.log(checkgroupFormArray,tg);
-  }
-
-
   prepareSave(): any {
-    const preparedform = new FormData();
-    this.formInputGroup.value['screens'].forEach(screen => {
-          const scren = Object.keys(screen);
-          scren.forEach(inp => {
-            preparedform.append(inp, screen[inp]);
+    const newForm = this.formdetail;
+    for (let key in newForm['presentations']['screens']) {
+      const obj = newForm['presentations']['screens'][key];
+      if(obj.questions) {
+        obj.questions.map(ques => {
+          this.formInputGroup.value['screens'].forEach(screen => {
+            for (const key in screen) {
+              if (key === ques.q) {
+                ques.v = screen[key];
+              }
+            }
           });
-    });
-    return preparedform;
+        });
+      }
+      if (obj.disclaimer && obj.consent) {
+        obj.termAccepted = true;
+        this.formInputGroup.value['screens'].forEach(screen => {
+          for (const key in screen) {
+            if (key === 'signature') {
+              obj.signature = screen[key];
+            }
+          }
+        });
+      }
+      newForm['presentations']['screens'][key] = obj;
+    }
+    return newForm;
   }
 
 
@@ -400,17 +394,6 @@ addValidators(input, control) {
   }
 
 /************Custom Validators*****************/
-  minSelectedCheckboxes(min = 1) {
-    const validator: ValidatorFn = (formArray: FormArray) => {
-      const totalSelected = formArray.controls
-        .map(control => control.value)
-        .reduce((prev, next) => next ? prev + next : prev, 0);
-      return totalSelected >= min ? null : { required: true };
-    };
-    return validator;
-  }
-
-
   validatorEmail() {
     const validator: ValidatorFn = (control: FormControl) => {
       let val = null;
