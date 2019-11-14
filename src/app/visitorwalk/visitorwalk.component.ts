@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef, ViewChildren, QueryList} from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChildren, QueryList, AfterViewInit} from '@angular/core';
 import { Router, ActivatedRoute} from '@angular/router';
 import { ServerCallsService } from '../server-calls.service';
-import { AbstractControl, FormBuilder, FormGroup, Validators, ValidatorFn, FormControl, FormArray} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ValidatorFn, FormControl, FormArray} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 
@@ -18,7 +18,7 @@ declare var cordova;
   styleUrls: ['./visitorwalk.component.css'],
   providers:  [NewFormInputService]
 })
-export class VisitorwalkComponent implements OnInit {
+export class VisitorwalkComponent implements OnInit, AfterViewInit  {
 
   @ViewChildren(SignaturePad) signaturePad: QueryList<SignaturePad>;
 
@@ -141,50 +141,50 @@ export class VisitorwalkComponent implements OnInit {
 
 addValidators(input, control) {
     switch (input['controlType']) {
+        case 'tel' :
+          if (input['required']) {
+            control.setValidators(Validators.compose([Validators.required, this.validatorNumber()]));
+          } else {
+            control.setValidators(Validators.compose([this.validatorNumber()]));
+          }
+          break;
+        case 'password' :
+          if (input['required']) {
+            control.setValidators(Validators.compose([Validators.required, this.validatorPassword()]));
+          } else {
+            control.setValidators(Validators.compose([this.validatorPassword()]));
+          }
+          break;
         case 'textbox' :
-            if (input['type'] === 'tel') {
-              if (input['required']) {
-                control.setValidators(Validators.compose([Validators.required, this.validatorNumber()]));
-              } else {
-                control.setValidators(Validators.compose([this.validatorNumber()]));
-              }
-            } else if (input['type'] === 'email') {
-              if (input['required']) {
-                control.setValidators(Validators.compose([Validators.required, this.validatorEmail()]));
-              } else {
-                control.setValidators(Validators.compose([this.validatorEmail()]));
-              }
-            } else if (input['type'] === 'password') {
-              if (input['required']) {
-                control.setValidators(Validators.compose([Validators.required, this.validatorPassword()]));
-              } else {
-                control.setValidators(Validators.compose([this.validatorPassword()]));
-              }
-            } else {
-              if (input['required']) {
-                control.setValidators(Validators.compose([Validators.required]));
-              }
-            }
-            break;
+          if (input['required']) {
+            control.setValidators(Validators.compose([Validators.required]));
+          }
+          break;
+        case 'email':
+          if (input['required']) {
+            control.setValidators(Validators.compose([Validators.required, this.validatorEmail()]));
+          } else {
+            control.setValidators(Validators.compose([this.validatorEmail()]));
+          }
+          break;
         case 'number':
-              if (input['required']) {
-                control.setValidators(Validators.compose([Validators.required, this.validatorNumber()]));
-              } else {
-                control.setValidators(Validators.compose([this.validatorNumber()]));
-              }
-            break;
-
+          if (input['required']) {
+            control.setValidators(Validators.compose([Validators.required, this.validatorNumber()]));
+          } else {
+            control.setValidators(Validators.compose([this.validatorNumber()]));
+          }
+          break;
         case 'header': break;
-        case 'paragraph':
-              if (input['type'] === 'canvas' && input['required']) {
-                control.setValidators(Validators.compose([Validators.required]));
-              }
-            break;
-
+        case 'paragraph': break;
+        case 'canvas' :
+          if (input['type'] === 'canvas' && input['required']) {
+            control.setValidators(Validators.compose([Validators.required]));
+          }
+          break;
         default:
-            if (input['required']) {
-              control.setValidators(Validators.compose([Validators.required]));
-            }
+          if (input['required']) {
+            control.setValidators(Validators.compose([Validators.required]));
+          }
     }
     return true;
   }
@@ -209,16 +209,18 @@ addValidators(input, control) {
                   questions.push({
                     q: resp['presentations']['screens'][key].disclaimer, 
                     ​​t: 'paragraph',
-                    required: true
+                    virtual: true
                   });
                   questions.push({
                     q: resp['presentations']['screens'][key].consent,
                     ​​t: 'Y/N Toggle',
+                    virtual: true,
                     required: true
                   });
                   questions.push({
-                    q: 'signature',
+                    q: 'signatureCanvas',
                     ​​t: 'canvas',
+                    virtual: true,
                     onClickFieldName: resp['presentations']['screens'][key].consent,
                     onClickFieldValue: true,
                   });
@@ -227,12 +229,14 @@ addValidators(input, control) {
                   questions.push({
                     q: resp['presentations']['screens'][key].graphic,
                     ​​t: 'image',
+                    virtual: true,
                   });
                 }
                 if ( resp['presentations']['screens'][key].video ) {
                   questions.push({
                     q: resp['presentations']['screens'][key].video,
-                    ​​t: 'video'
+                    ​​t: 'video',
+                    virtual: true,
                   });
                 }
                 obj.questions = questions;
@@ -242,7 +246,6 @@ addValidators(input, control) {
                   this.formsInputs.push(this.forminputsrvc.getFormdata(questions, 'notreal'));
                 }
               }
-              console.log(this.formdetail, this.formloadedForm);
               this.formloaded = true;
              }
            }
@@ -268,21 +271,21 @@ addValidators(input, control) {
       this.submiting = true;
       const pData = this.prepareSave();
       this.servercall.submitCall(this.servercall.baseUrl + 'visitorResponses.json', pData).subscribe(
-            resp => {
-               if (resp) {
-                 this.toastr.success('Thank You', 'Your Data has been saved', {timeOut: 2000});
-                 this.router.navigate(['/dashboard/']);
-               }
-           },
-           error => {
-              this.submiting = false;
-              this.submiterror = true;
-              this.errorMessage = 'Something went wrong! Please Try again later.';
-              console.log(error);
-           }
+          resp => {
+            if (resp) {
+              this.toastr.success('Thank You', 'Your Data has been saved', {timeOut: 2000});
+              this.router.navigate(['/dashboard/']);
+            }
+          },
+          error => {
+            this.submiting = false;
+            this.submiterror = true;
+            this.errorMessage = 'Something went wrong! Please Try again later.';
+            console.log(error);
+          }
         );
       } else {
-             this.errorMessage = 'You have missed some required information.';
+        this.errorMessage = 'You have missed some required information.';
       }
   }
 
@@ -339,6 +342,18 @@ addValidators(input, control) {
     const newForm = this.formdetail;
     for (let key in newForm['presentations']['screens']) {
       const obj = newForm['presentations']['screens'][key];
+
+      if (obj.disclaimer && obj.consent) {
+        obj.termAccepted = true;
+        this.formInputGroup.value['screens'].forEach(screen => {
+          for (const key in screen) {
+            if (key === 'signatureCanvas') {
+              obj.signature = screen[key];
+            }
+          }
+        });
+      }
+      obj.questions = obj.questions.filter(t => !t.virtual);
       if(obj.questions) {
         obj.questions.map(ques => {
           this.formInputGroup.value['screens'].forEach(screen => {
@@ -348,16 +363,6 @@ addValidators(input, control) {
               }
             }
           });
-        });
-      }
-      if (obj.disclaimer && obj.consent) {
-        obj.termAccepted = true;
-        this.formInputGroup.value['screens'].forEach(screen => {
-          for (const key in screen) {
-            if (key === 'signature') {
-              obj.signature = screen[key];
-            }
-          }
         });
       }
       newForm['presentations']['screens'][key] = obj;
